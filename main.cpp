@@ -1,15 +1,18 @@
 
 #include <opencv2/core.hpp> // It declararations for Mat class
 #include <opencv2/highgui.hpp> // imread()
+#include <opencv2/opencv.hpp>
 #include <iostream>
 
 using namespace cv;
 using namespace std;
 
+Mat img;
+
 int main()
 {
     //Read image
-    Mat img = imread("./sadf.png", IMREAD_COLOR);
+    img = imread("./sadf.png", IMREAD_COLOR);
     //delaring mat object
     int cols = 15, rows = 20;
     //rows, cols, type, scalar()
@@ -23,19 +26,14 @@ int main()
     //Show img's first channel
     imshow("Blue", channels[0]);
 
-    /*
-    IMREAD_UNCHANGED If set, return the loaded image as is
-    IMREAD_GRAYSCALE If set, always convert the image to the single channel grayscale image
-    IMREAD_COLOR If set, always convert the image to the three channel BGR color image
-    IMREAD_ANYDEPTH If set, return the 16-bit/32-bit image when the input has the
-    corresponding depth, otherwise convert it to 8-bit
-    IMREAD_ANYCOLOR If set, the image is read in any possible color format
-    IMREAD_LOAD_GDAL If set, use the gdal driver for loading the image
-    */
     if (img.empty()) {
         cerr << "Image load failed!" << endl;
         return -1;
     }
+
+    Mat gray;
+    cvtColor(img, gray, COLOR_BGR2GRAY);
+        
 
     namedWindow("image");
     imshow("image", img);
